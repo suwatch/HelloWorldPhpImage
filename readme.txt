@@ -5,7 +5,10 @@ docker build -t helloworldphpimage .
 REM list docker images
 docker image ls
 
-REM run docker image
+REM create container and run interactively in same command
+docker run --name helloworldphp --rm -it helloworldphpimage
+
+REM create container and then run
 docker run --name helloworldphp helloworldphpimage
 docker container start helloworldphp --interactive
 
@@ -32,8 +35,7 @@ REM Dockerfile.nginx
 curl localhost:8080/default.html -v
 
 REM Dockerfile-less
-TODO docker run -it --rm --name helloworldphp -v "$PWD":/usr/src/scripts -w /usr/src/scripts php:7.4-cli php src\index.php
-TODO docker run -it --rm --name helloworldphp -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:7.4-cli php your-script.php
-
-
-
+docker run -it --rm --name helloworldphp php:7.4-apache
+docker cp c:/gitroot/helloworldphpimage/src/. helloworldphp:/var/www/html/
+docker exec -it helloworldphp bash
+curl 127.0.0.1:8080/default.html -v
